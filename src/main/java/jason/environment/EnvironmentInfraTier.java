@@ -32,6 +32,9 @@ public interface EnvironmentInfraTier {
     /** returns true if the infrastructure environment is running */
     public boolean isRunning();
 
+    /** returns true if the infrastructure environment wants to stop */
+    public boolean wantsTerminate();
+
     /** called by the user implementation of the environment when the action was executed */
     public void actionExecuted(String agName, Structure actTerm, boolean success, Object infraData);
 

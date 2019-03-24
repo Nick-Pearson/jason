@@ -159,6 +159,11 @@ public class JadeEnvironment extends JadeAg implements EnvironmentInfraTier {
         if (userEnv != null) userEnv.stop();
     }
 
+    public boolean wantsTerminate()
+    {
+      return userEnv.wantsTerminate();
+    }
+
     public void actionExecuted(String agName, Structure actTerm, boolean success, Object infraData) {
         try {
             ACLMessage r = (ACLMessage)infraData;

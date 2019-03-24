@@ -85,13 +85,13 @@ public class RunCentralisedMAS extends BaseCentralisedMAS implements RunCentrali
 
     protected void registerMBean() {
         try {
-            MBeanServer mbs = ManagementFactory.getPlatformMBeanServer(); 
+            MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
             mbs.registerMBean(this, new ObjectName("jason.sf.net:type=runner"));
         } catch (Exception e) {
             e.printStackTrace();
-        }       
+        }
     }
-    
+
     protected int init(String[] args) {
         String projectFileName = null;
         if (args.length < 1) {
@@ -405,7 +405,7 @@ public class RunCentralisedMAS extends BaseCentralisedMAS implements RunCentrali
         Agent pag = null;
 
         RuntimeServices rs = getRuntimeServices();
-        
+
         // create agents
         for (AgentParameters ap : project.getAgents()) {
             try {
@@ -423,7 +423,7 @@ public class RunCentralisedMAS extends BaseCentralisedMAS implements RunCentrali
                     }
 
                     numberedAg = rs.getNewAgentName(numberedAg);
-                    
+
                     ap.addArchClass(rs.getDefaultAgArchs());
                     logger.fine("Creating agent " + numberedAg + " (" + (cAg + 1) + "/" + ap.getNbInstances() + ")");
 
@@ -742,7 +742,7 @@ public class RunCentralisedMAS extends BaseCentralisedMAS implements RunCentrali
             ag.stopAg();
         }
     }
-    
+
     public boolean killAg(String agName) {
         return getRuntimeServices().killAgent(agName, "??");
     }
@@ -783,11 +783,12 @@ public class RunCentralisedMAS extends BaseCentralisedMAS implements RunCentrali
     protected void waitEnd() {
         try {
             // wait a file called .stop___MAS to be created!
+            // OR for the environment to request stop
             File stop = new File(stopMASFileName);
             if (stop.exists()) {
                 stop.delete();
             }
-            while (!stop.exists()) {
+            while (!stop.exists() && !env.wantsTerminate()) {
                 Thread.sleep(1500);
                 /*
                 boolean allSleep = true;
@@ -901,5 +902,5 @@ public class RunCentralisedMAS extends BaseCentralisedMAS implements RunCentrali
         frame.setVisible(true);
     }
 
-    
+
 }

@@ -43,6 +43,10 @@ public class CentralisedEnvironment implements EnvironmentInfraTier {
         return running;
     }
 
+    public boolean wantsTerminate() {
+      return userEnv.wantsTerminate();
+    }
+
     /** called before the end of MAS execution, it just calls the user environment class stop method. */
     public void stop() {
         running = false;

@@ -38,6 +38,7 @@ public class Environment {
     private Map<String,List<Literal>>  agPercepts = new ConcurrentHashMap<String, List<Literal>>();
 
     private boolean isRunning = true;
+    private boolean wantsTerminate = false;
 
     /** the infrastructure tier for environment (Centralised, Saci, ...) */
     private EnvironmentInfraTier environmentInfraTier = null;
@@ -82,6 +83,19 @@ public class Environment {
 
     public boolean isRunning() {
         return isRunning;
+    }
+
+    /**
+      * Called to request the MAS be terminated (gracefully)
+      * N.B. It may take some time after this call is made before the MAS actually shuts down
+      */
+    protected void requestTerminate()
+    {
+      wantsTerminate = true;
+    }
+
+    public boolean wantsTerminate() {
+      return wantsTerminate;
     }
 
     /**
